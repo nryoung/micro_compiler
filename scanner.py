@@ -70,6 +70,10 @@ class Scanner(object):
         return c == ','
     def check_plus(self, c):
         return c == '+'
+    def check_colon(self, c):
+        return c == ':'
+    def check_assignment(self, c):
+        return c == '='
 
     def scan(self):
         # Clear the buffer
@@ -131,6 +135,22 @@ class Scanner(object):
                 if self.check_plus(char):
                     self.advance(i)
                     return 'PlusOp'
+
+                # Check for assignment
+                if self.check_colon(char):
+                    next_char = self.inspect(i)
+                    if self.check_assignment(next_char):
+                        self.advance(i)
+                        return 'AssignOp'
+                    else:
+                        return 'LexicalError'
+
+                # Check for comments or MinusOp
+                if self.check_comment(char):
+                    next_char = self.inspect(i)
+                    if self.check_comment(next_char):
+                        self.read()
+                        pass
                 else:
                     self.advance(i)
                     return
