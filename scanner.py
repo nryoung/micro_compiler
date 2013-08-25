@@ -74,6 +74,8 @@ class Scanner(object):
         return c == ':'
     def check_assignment(self, c):
         return c == '='
+    def check_minus(self, c):
+        return c == '-'
 
     def scan(self):
         # Clear the buffer
@@ -146,11 +148,16 @@ class Scanner(object):
                         return 'LexicalError'
 
                 # Check for comments or MinusOp
-                if self.check_comment(char):
+                if self.check_minus(char):
                     next_char = self.inspect(i)
-                    if self.check_comment(next_char):
-                        self.read()
-                        pass
+                    if self.check_minus(next_char):
+                        while char != '\n':
+                            self.advance(i)
+                            char = self.read()
+                            logging.debug("char: %s" % char)
+                    else:
+                        self.advance(i)
+                        return 'MinusOp'
                 else:
                     self.advance(i)
                     return

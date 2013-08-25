@@ -26,4 +26,5 @@ if __name__ == '__main__':
             token_list.append(token)
         if token == 'EofSym':
             break
+
     print token_list
