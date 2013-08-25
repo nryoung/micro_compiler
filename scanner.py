@@ -1,15 +1,13 @@
 """
-Scanner implementation in the Python
+Scanner implementation
 """
-import logging
+from scanner_errors import LexicalError
 
 # Globals
-
 tokens = {'BEGIN': 'BeginSym',
-            'END': 'EndSym',
-            'READ': 'ReadSym',
-            'WRITE': 'WriteSym'
-           }
+          'END': 'EndSym',
+          'READ': 'ReadSym',
+          'WRITE': 'WriteSym'}
 
 
 class Scanner(object):
@@ -38,7 +36,6 @@ class Scanner(object):
             self.micro_lang = ''
 
     def check_reserved(self):
-        logging.debug("Buffer: %s" % self.buffer)
         if self.buffer in tokens:
             return tokens[self.buffer]
         else:
@@ -90,6 +87,7 @@ class Scanner(object):
             while True:
                 i = 0
                 char = self.read()
+
                 # Check if the char should be ignored
                 if self.check_none(char):
                     self.advance(i)
@@ -118,7 +116,6 @@ class Scanner(object):
                             self.advance(i)
                         else:
                             self.advance(i)
-                            logging.debug('Buffer: %s' % self.buffer)
                             return 'IntLiteral'
 
                 # Check for misc. chars
@@ -142,10 +139,10 @@ class Scanner(object):
                 if self.check_colon(char):
                     next_char = self.inspect(i)
                     if self.check_assignment(next_char):
-                        self.advance(i)
+                        self.advance(1)
                         return 'AssignOp'
                     else:
-                        return 'LexicalError'
+                        raise LexicalError(next_char)
 
                 # Check for comments or MinusOp
                 if self.check_minus(char):
@@ -154,10 +151,8 @@ class Scanner(object):
                         while char != '\n':
                             self.advance(i)
                             char = self.read()
-                            logging.debug("char: %s" % char)
                     else:
                         self.advance(i)
                         return 'MinusOp'
                 else:
-                    self.advance(i)
-                    return
+                    raise LexicalError(char)
