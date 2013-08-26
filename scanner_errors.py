@@ -1,5 +1,8 @@
 """
-Exceptions for the compiler
+Errors for the compiler
+Name: Nicholas Young
+Course: CSCI 4640
+Assignment #1
 """
 
 class LexicalError(Exception):

@@ -1,36 +1,29 @@
 """
 Test runner for Scanner implementation
+Name: Nicholas Young
+Course: CSCI 4640
+Assignment #1
 """
 from scanner import Scanner
 from scanner_errors import LexicalError
-import logging
+import argparse
 
-# Globals to be used in testing
-micro_lang1 = """BEGIN -- SOMETHING UNUSUAL
-  READ(A1,New_A, D, B); 
-  C:= A1 +(New_A - D) - 75; 
-  New_C:=((B- (7)+(C+D)))-(3 - A1);-- STUPID FORMULA 
-  WRITE(C, A1+New_C); 
-  -- WHAT ABOUT := B+D;
-END"""
-
-micro_lang2 = """BEGIN 
-READ(A, B, C, D); 
-E := (A + B) - (C + D); -- Calculate
-WRITE(E); 
-END"""
 
 token_list = []
 
 if __name__ == '__main__':
-    logging.basicConfig(filename='log.log', level=logging.DEBUG)
 
-    s = Scanner(micro_lang2)
+    # Add argument parsers to the program
+    parser = argparse.ArgumentParser()
+    parser.add_argument('program', type=argparse.FileType('r'),
+                        help='Name of program to be scanned')
+    args = parser.parse_args()
 
+    # Instantiate our Scanner and yield the token list
+    s = Scanner(args.program)
     try:
         while True:
             token = s.scan()
-            logging.debug('Token: %s' % token)
             if token:
                 token_list.append(token)
             if token == 'EofSym':

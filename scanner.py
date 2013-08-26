@@ -1,5 +1,8 @@
 """
 Scanner implementation
+Name: Nicholas Young
+Course: CSCI 4640
+Assignment #1
 """
 from scanner_errors import LexicalError
 
@@ -13,12 +16,15 @@ tokens = {'BEGIN': 'BeginSym',
 class Scanner(object):
 
     def __init__(self, micro_lang):
-        self.micro_lang = micro_lang
+        self.micro_lang = str(micro_lang.read())
         self.buffer = ''
         self.i = iter(self.micro_lang)
 
     def read(self):
-        return self.micro_lang[0]
+        try:
+            return self.micro_lang[0]
+        except IndexError:
+            return 'EofSym'
 
     def buffer_char(self, c):
         self.buffer += c
