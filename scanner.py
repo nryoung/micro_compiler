@@ -16,7 +16,7 @@ tokens = {'BEGIN': 'BeginSym',
 class Scanner(object):
 
     def __init__(self, micro_lang):
-        self.micro_lang = str(micro_lang.read())
+        self.micro_lang = str(micro_lang.read()).rstrip('\n');
         self.buffer = ''
         self.i = iter(self.micro_lang)
 
