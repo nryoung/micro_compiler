@@ -4,7 +4,7 @@ Name: Nicholas Young
 Course: CSCI 4640
 Assignment #2
 """
-# from compiler_errors import SyntaxError
+from compiler_errors import SyntaxError
 from scanner import Scanner
 
 class Parser(object):
@@ -12,10 +12,17 @@ class Parser(object):
     def __init__(self, micro_lang):
         self.scanner = Scanner(micro_lang)
 
+    def match(self, legal_token):
+        current_token = self.scanner.scan()
+
+        if current_token != legal_token:
+            raise SyntaxError(current_token)
+
     def system_goal(self):
         self.program()
         self.match('EofSym')
 
+    """
     def program(self):
         self.match('BeginSym')
         self.statement_list()
@@ -119,3 +126,4 @@ class Parser(object):
 
         else:
             raise SyntaxError(next_token)
+    """
