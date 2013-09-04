@@ -23,5 +23,5 @@ class SyntaxError(CompilerError):
     """
     Exception raised when a syntax error is detected.
     """
-    def __init__(self, bad_char):
-        self.bad_char = bad_char
+    def __init__(self, syn_err):
+        self.syn_err = syn_err
