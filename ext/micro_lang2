@@ -1,5 +1,5 @@
-BEGIN 
-READ(A, B, C, D); 
+BEGIN
+READ(A, B, C, D);
 E := (A + B) - (C + D); -- Calculate
-WRITE(E); 
+WRITE(E);
 END
