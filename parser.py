@@ -12,6 +12,12 @@ class Parser(object):
     def __init__(self, micro_lang):
         self.scanner = Scanner(micro_lang)
 
+    def next_token(self):
+        temp_micro = self.scanner.micro_lang
+        next_token = self.scanner.scan()
+        self.scanner.micro_lang = temp_micro
+        return next_token
+
     def match(self, legal_token):
         current_token = self.scanner.scan()
 
@@ -22,7 +28,6 @@ class Parser(object):
         self.program()
         self.match('EofSym')
 
-    """
     def program(self):
         self.match('BeginSym')
         self.statement_list()
@@ -42,6 +47,7 @@ class Parser(object):
 
     def statement(self):
         next_token = self.next_token()
+        print "Next token in stmt: %s" % next_token
         if next_token == 'Id':
             self.ident()
             self.match('AssignOp')
@@ -126,4 +132,3 @@ class Parser(object):
 
         else:
             raise SyntaxError(next_token)
-    """
