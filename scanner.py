@@ -85,7 +85,7 @@ class Scanner(object):
         self.buffer = ''
 
         # Check for EOF
-        if self.micro_lang == '':
+        if self.micro_lang == '$':
             return 'EofSym'
 
         # Loop through our Micro Lang
