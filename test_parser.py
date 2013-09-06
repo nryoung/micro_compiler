@@ -5,7 +5,7 @@ Course: CSCI 4640
 Assignment #1
 """
 from parser import Parser
-from compiler_errors import SyntaxError
+from compiler_errors import SyntaxError, LexicalError
 import argparse
 
 if __name__ == '__main__':
@@ -21,8 +21,8 @@ if __name__ == '__main__':
         while True:
             p.system_goal()
             break
-    except SyntaxError as e:
-        print "Syntax Error: '%s'" % e.syn_err
+    except (SyntaxError, LexicalError) as e:
+        print "Lexical or Syntax error occured with char: '%s'" % e.err
     else:
         for o in p.output:
             print o
