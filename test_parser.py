@@ -24,4 +24,5 @@ if __name__ == '__main__':
     except SyntaxError as e:
         print "Syntax Error: '%s'" % e.syn_err
     else:
-        print "Complete!"
+        for o in p.output:
+            print o

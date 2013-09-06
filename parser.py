@@ -11,6 +11,16 @@ class Parser(object):
 
     def __init__(self, micro_lang):
         self.scanner = Scanner(micro_lang)
+        self.terminals = []
+        self.output = []
+
+    def build_output(self, s):
+        if self.terminals:
+            temp = ' '.join(self.terminals)
+            temp += ' %s' % s
+            self.output.append(temp)
+        else:
+            self.output.append(s)
 
     def next_token(self):
         temp_micro = self.scanner.micro_lang
@@ -23,17 +33,25 @@ class Parser(object):
 
         if current_token != legal_token:
             raise SyntaxError(current_token)
+        else:
+            self.terminals.append(current_token)
 
     def system_goal(self):
+        self.build_output('<system goal>')
         self.program()
         self.match('EofSym')
+        self.build_output('')
+
 
     def program(self):
+        self.build_output('<program>')
         self.match('BeginSym')
         self.statement_list()
         self.match('EndSym')
+        self.build_output('')
 
     def statement_list(self):
+        self.build_output('<statement list>')
         self.statement()
         next_token = self.next_token()
         if next_token == 'Id':
@@ -46,8 +64,8 @@ class Parser(object):
             return
 
     def statement(self):
+        self.build_output('<statement>')
         next_token = self.next_token()
-        print "Next token in stmt: %s" % next_token
         if next_token == 'Id':
             self.ident()
             self.match('AssignOp')
@@ -72,6 +90,7 @@ class Parser(object):
             raise SyntaxError(next_token)
 
     def id_list(self):
+        self.build_output('<id list>')
         self.ident()
         next_token = self.next_token()
 
@@ -82,6 +101,7 @@ class Parser(object):
             return
 
     def expression_list(self):
+        self.build_output('<expression list>')
         self.expression()
         next_token = self.next_token()
 
@@ -92,6 +112,7 @@ class Parser(object):
             return
 
     def expression(self):
+        self.build_output('<expression>')
         self.primary()
         next_token = self.next_token()
 
@@ -102,6 +123,7 @@ class Parser(object):
             return
 
     def primary(self):
+        self.build_output('<primary>')
         next_token = self.next_token()
 
         if next_token == 'LParen':
@@ -122,6 +144,7 @@ class Parser(object):
         self.match('Id')
 
     def add_op(self):
+        self.build_output('<add op>')
         next_token = self.next_token()
 
         if next_token == 'PlusOp':
