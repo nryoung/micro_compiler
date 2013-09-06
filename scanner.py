@@ -4,7 +4,7 @@ Name: Nicholas Young
 Course: CSCI 4640
 Assignment #1
 """
-from scanner_errors import LexicalError
+from compiler_errors import LexicalError
 
 # Globals
 tokens = {'BEGIN': 'BeginSym',

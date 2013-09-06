@@ -16,7 +16,7 @@ class LexicalError(CompilerError):
     Exception raised when a lexical error is detected.
     """
     def __init__(self, bad_char):
-        self.bad_char = bad_char
+        self.err = bad_char
 
 
 class SyntaxError(CompilerError):
@@ -24,4 +24,4 @@ class SyntaxError(CompilerError):
     Exception raised when a syntax error is detected.
     """
     def __init__(self, syn_err):
-        self.syn_err = syn_err
+        self.err = syn_err
