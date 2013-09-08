@@ -2,10 +2,9 @@
 Parser implementation
 Name: Nicholas Young
 Course: CSCI 4640
-Assignment #2
 """
-from compiler_errors import SyntaxError
-from scanner import Scanner
+from .compiler_errors import SyntaxError
+from .scanner import Scanner
 
 class Parser(object):
 
