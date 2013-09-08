@@ -4,4 +4,4 @@ BEGIN -- SOMETHING UNUSUAL
   New_C:=((B- (7)+(C+D)))-(3 - A1);-- STUPID FORMULA
   WRITE(C, A1+New_C);
   -- WHAT ABOUT := B+D;
-END
+END$
