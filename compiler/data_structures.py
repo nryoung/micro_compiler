@@ -1,5 +1,5 @@
 """
-Data structures to be used in the micro micro compiler.
+Data structures to be used in the micro compiler.
 """
 
 from compiler_errors import OpError
