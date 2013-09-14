@@ -239,5 +239,16 @@ class TestParser(unittest.TestCase):
 
         self.assertEqual(t1, "HALT")
 
+    def test_program(self):
+        t1 = None
+        with open( self.input_file, 'w') as f:
+            f.write('BEGIN A := BB + 314 + A; END$')
+        with open(self.input_file, 'r') as f:
+            p = Parser(f)
+            p.program()
+        os.remove(self.input_file)
+
+
+
 if __name__ == '__main__':
     unittest.main()

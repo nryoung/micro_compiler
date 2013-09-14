@@ -13,6 +13,7 @@ class Parser(object):
         self.scanner = Scanner(micro_lang)
         self.terminals = []
         self.output = []
+        self.symbol_table = []
 
     def build_output(self, s):
         if self.terminals:
@@ -46,7 +47,7 @@ class Parser(object):
 
     def program(self):
         self.build_output('<program>')
-        # Start
+        sem_routines.start(self.symbol_table)
         self.match('BeginSym')
         self.statement_list()
         self.match('EndSym')
