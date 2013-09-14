@@ -6,6 +6,7 @@ import unittest
 import os
 from compiler import aux_routines
 from compiler import sem_routines
+from compiler.parser import Parser
 
 # we mock our ExprRec and OpRec class here
 class Record(object):
@@ -212,6 +213,29 @@ class TestSemRoutines(unittest.TestCase):
         with open(self.output_file, 'r') as f:
             t1 = f.read()
         os.remove(self.output_file)
+
+        self.assertEqual(t1, "HALT")
+
+
+class TestParser(unittest.TestCase):
+
+    def setUp(self):
+        self.input_file = "output/micro_code"
+        self.output_file = "output/op_code"
+
+    def test_system_goal(self):
+        t1 = None
+        with open( self.input_file, 'w') as f:
+            f.write('BEGIN A := BB + 314 + A; END$')
+
+        with open(self.input_file, 'r') as f:
+            p = Parser(f)
+            p.system_goal()
+
+        with open(self.output_file, 'r') as f:
+            t1 = f.read()
+        os.remove(self.output_file)
+        os.remove(self.input_file)
 
         self.assertEqual(t1, "HALT")
 

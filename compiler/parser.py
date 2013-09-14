@@ -5,6 +5,7 @@ Course: CSCI 4640
 """
 from .compiler_errors import SyntaxError
 from .scanner import Scanner
+import sem_routines
 
 class Parser(object):
 
@@ -40,7 +41,7 @@ class Parser(object):
         self.program()
         self.match('EofSym')
         self.build_output('')
-        # Finish
+        sem_routines.finish()
 
 
     def program(self):
