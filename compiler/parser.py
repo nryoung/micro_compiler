@@ -40,10 +40,12 @@ class Parser(object):
         self.program()
         self.match('EofSym')
         self.build_output('')
+        # Finish
 
 
     def program(self):
         self.build_output('<program>')
+        # Start
         self.match('BeginSym')
         self.statement_list()
         self.match('EndSym')

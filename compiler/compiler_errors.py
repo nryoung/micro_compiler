@@ -24,3 +24,10 @@ class SyntaxError(CompilerError):
     """
     def __init__(self, syn_err):
         self.err = syn_err
+
+class TypeError(CompilerError):
+    """
+    Exception raised when a type error is detected.
+    """
+    def __init__(self, typ_error):
+        self.err = typ_error
