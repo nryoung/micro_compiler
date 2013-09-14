@@ -38,4 +38,6 @@ Example test Scanner command:
 Unit Tests:
 ===========
 
-- Coming to compiler near you soon!
+`python test_compiler.py unit`
+
+- Performs unit tests.
