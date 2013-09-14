@@ -5,6 +5,8 @@ Name: Nicholas Young
 Course: CSCI 4640
 """
 import argparse
+import tests
+import unittest
 from compiler.compiler_errors import SyntaxError, LexicalError
 
 def test_parser(program):
@@ -39,6 +41,12 @@ def test_scanner(program):
     else:
         print token_list
 
+def unit_tests():
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromModule(tests)
+    runner = unittest.TextTestRunner(verbosity=2)
+    result = runner.run(suite)
+
 
 if __name__ == '__main__':
     # Create cmd line object parser
@@ -57,6 +65,6 @@ if __name__ == '__main__':
     elif args.test_type == 'parser':
         test_parser(args.file)
     elif args.test_type == 'unit':
-        print 'Unit tests'
+        unit_tests()
     else:
         parser.print_help()
