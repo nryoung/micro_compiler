@@ -1,0 +1,12 @@
+Example OP Code for:
+begin A := BB + 314 + A; end$
+------------------------------
+DECLARE A, Integer
+DECLARE BB, Integer
+DECLARE Temp&1, Integer
+ADD 314, A, Temp&1
+DECLARE Temp&2, Integer
+ADD BB, Temp&1, Temp&1
+STORE Temp&2, A
+HALT
+-----------------------------

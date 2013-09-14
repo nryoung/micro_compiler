@@ -4,7 +4,7 @@ Auxiliary Routines for the micro compiler.
 
 # Globals
 max_temp = 0
-output_file = "compiled_code/op_code"
+output_file = "output/op_code"
 
 def generate(s1, s2=None, s3=None, s4=None, output_file=output_file):
     with open(output_file, 'a') as f:

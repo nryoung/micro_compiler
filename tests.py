@@ -15,7 +15,7 @@ class TestAuxRoutines(unittest.TestCase):
 
     def setUp(self):
         self.symbol_table = []
-        self.output_file = "compiled_code/op_code"
+        self.output_file = "output/op_code"
 
     def test_generate(self):
         test3, test4 = None, None
@@ -106,7 +106,7 @@ class TestSemRoutines(unittest.TestCase):
 
     def setUp(self):
         self.symbol_table = []
-        self.output_file = "compiled_code/op_code"
+        self.output_file = "output/op_code"
 
     def test_start(self):
         self.symbol_table = ["dirty", "symbol", "table"]
