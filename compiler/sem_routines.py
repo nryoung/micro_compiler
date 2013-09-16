@@ -1,5 +1,7 @@
 """
 Semantic routines for the micro compiler.
+Name: Nicholas Young
+Course: CSCI 4640
 """
 from aux_routines import generate
 from aux_routines import extract

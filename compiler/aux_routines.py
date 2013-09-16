@@ -1,5 +1,7 @@
 """
 Auxiliary Routines for the micro compiler.
+Name: Nicholas Young
+Course: CSCI 4640
 """
 import sys
 
