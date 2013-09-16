@@ -248,6 +248,10 @@ class TestParser(unittest.TestCase):
             p.program()
         os.remove(self.input_file)
 
+        #self.assertEqual() something?
+
+    def test_statement(self):
+        pass
 
 
 if __name__ == '__main__':
