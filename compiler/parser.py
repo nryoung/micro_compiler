@@ -5,6 +5,7 @@ Course: CSCI 4640
 """
 from .compiler_errors import SyntaxError
 from .scanner import Scanner
+from .data_structures import ExprRec, OpRec
 import sem_routines
 
 class Parser(object):
@@ -67,12 +68,15 @@ class Parser(object):
             return
 
     def statement(self):
+        identifier = ExprRec()
+        expr = ExprRec()
         self.build_output('<statement>')
         next_token = self.next_token()
         if next_token == 'Id':
-            self.ident()
+            self.ident(identifier)
             self.match('AssignOp')
-            self.expression()
+            self.expression(expr)
+            sem_routines.assign(identifier, expr)
             self.match('SemiColon')
 
         elif next_token == 'ReadSym':
@@ -93,8 +97,10 @@ class Parser(object):
             raise SyntaxError(next_token)
 
     def id_list(self):
+        identifier = ExprRec()
         self.build_output('<id list>')
-        self.ident()
+        self.ident(identifier)
+        sem_routines.read_id(identifier)
         next_token = self.next_token()
 
         if next_token == 'Comma':
@@ -104,8 +110,10 @@ class Parser(object):
             return
 
     def expression_list(self):
+        expr = ExprRec()
         self.build_output('<expression list>')
-        self.expression()
+        self.expression(expr)
+        sem_routines.write_expr(expr)
         next_token = self.next_token()
 
         if next_token == 'Comma':
@@ -114,47 +122,69 @@ class Parser(object):
         else:
             return
 
-    def expression(self):
+    def expression(self, result):
+        left_oper = ExprRec()
+        right_oper = ExprRec()
+        op = OpRec()
         self.build_output('<expression>')
-        self.primary()
+        self.primary(left_oper)
         next_token = self.next_token()
 
         if next_token == 'PlusOp' or next_token == 'MinusOp':
-            self.add_op()
-            self.expression()
+            self.add_op(op)
+            self.expression(right_oper)
+            temp = sem_routines.get_infix(left_oper, op, right_oper, self.symbol_table)
+
+            # Note we have to explicitly set attribute values here instead of a straight
+            # assignment like: result = sem_routines(...).
+            # Python rebinds the name result to the temp obj. instead of updating the
+            # current one. This causes problems when the temp obj. is GC'ed.
+            if temp.name:
+                result.name = temp.name
+            elif temp.val:
+                result.val = temp.val
         else:
+            # See comment above as to why attributes are set explicitly
+            if left_oper.name:
+                result.name = left_oper.name
+            elif left_oper.val:
+                result.val = left_oper.val
             return
 
-    def primary(self):
+    def primary(self, result):
         self.build_output('<primary>')
         next_token = self.next_token()
 
         if next_token == 'LParen':
             self.match('LParen')
-            self.expression()
+            self.expression(result)
             self.match('RParen')
 
         elif next_token == 'Id':
-            self.ident()
+            self.ident(result)
 
         elif next_token == 'IntLiteral':
             self.match('IntLiteral')
+            sem_routines.proc_literal(result, self.scanner.buffer)
 
         else:
             raise SyntaxError(next_token)
 
-    def ident(self):
+    def ident(self, result):
         self.match('Id')
+        sem_routines.process_id(result, self.scanner.buffer, self.symbol_table)
 
-    def add_op(self):
+    def add_op(self, op):
         self.build_output('<add op>')
         next_token = self.next_token()
 
         if next_token == 'PlusOp':
             self.match('PlusOp')
+            sem_routines.process_op(op, '+')
 
         elif next_token == 'MinusOp':
             self.match('MinusOp')
+            sem_routines.process_op(op, '-')
 
         else:
             raise SyntaxError(next_token)
