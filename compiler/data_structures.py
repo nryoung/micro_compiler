@@ -8,9 +8,9 @@ from compiler_errors import IdError
 
 class OpRec(object):
 
-    allowed_vals = ['-', '+']
+    allowed_vals = ['-', '+', None]
 
-    def __init__(self, operator):
+    def __init__(self, operator=None):
         self.op = operator
 
     @property
@@ -26,7 +26,7 @@ class OpRec(object):
 
 class ExprRec(object):
 
-    def __init__(self, expr, literal=None):
+    def __init__(self, expr=None, literal=None):
         if literal:
             self.val = expr
         else:
@@ -53,7 +53,7 @@ class ExprRec(object):
     def name(self, expr):
         try:
             n = int(expr)
-        except ValueError:
+        except (ValueError, TypeError):
             self._name = expr
         else:
             raise IdError("Invalid Id name: '%s'" % expr)
