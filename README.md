@@ -5,10 +5,27 @@ Requirements
 ============
 - Python version 2.7.3+
 
+
+Test Compile:
+=============
+
+`$ python test_compiler.py compile --in_file=<file with micro_lang> --out_file=<output file>`
+
+- Where the `<file with micro_lang>` is the path to the file containing micro language.
+- Example test files can be found in the `ext` dir.
+- Where the `<output file>` is the path to the file that the compiler will output op code.
+- If no output file is specified the compiler outputs by default to `output/op_code`.
+
+Example test Compile command:
+-----------------------------
+
+`$ python test_compiler.py compile --in_file=ext/test_compile1 --out_file=output/op_code`
+
+
 Test Parser:
 ============
 
-`$ python test_compiler.py parser --file=<file with micro_lang>`
+`$ python test_compiler.py parser --in_file=<file with micro_lang>`
 
 - Where the `<file with micro_lang>` is the path to the file containing micro language.
 - Example test files can be found in the `ext` dir.
@@ -17,13 +34,13 @@ Test Parser:
 Example test Parser command:
 ----------------------------
 
-`$ python test_compiler.py parser --file=ext/test_parser1`
+`$ python test_compiler.py parser --in_file=ext/test_parser1`
 
 
 Test Scanner:
 =============
 
-`$ python test_compiler.py scanner --file=<file with micro_lang>`
+`$ python test_compiler.py scanner --in_file=<file with micro_lang>`
 
 - Where the `<file with micro_lang>` is the path to the file containing micro language.
 - Example test files can be found in the `ext` dir.
@@ -32,7 +49,7 @@ Test Scanner:
 Example test Scanner command:
 -----------------------------
 
-`$ python test_compiler.py scanner --file=ext/test_scanner1`
+`$ python test_compiler.py scanner --in_file=ext/test_scanner1`
 
 
 Unit Tests:
