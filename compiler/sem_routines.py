@@ -8,7 +8,6 @@ from aux_routines import get_temp
 from aux_routines import check_id
 from data_structures import ExprRec
 
-
 def start(symbol_table):
     symbol_table[:] = []
 
@@ -26,20 +25,16 @@ def get_infix(e1, op, e2, symbol_table):
     generate(extract_op(op), extract(e1), extract(e2), temp_expr.name)
     return temp_expr
 
-def process_id(e, symbol_table):
-    # for right now token buffer is being faked here
-    # until I can figure out how to integrate it
-    check_id("A", symbol_table)
-    e.name = "A"
+def process_id(e, token_buffer, symbol_table):
+    check_id(token_buffer, symbol_table)
+    e.name = token_buffer
 
-def proc_literal(e):
+def proc_literal(e, token_buffer):
     # mocking token buffer here too
-    token_buffer = '1011'
     e.val = int(token_buffer)
 
-def process_op(o):
+def process_op(o, current_token):
     # mocking current token
-    current_token = "+"
     o.op = current_token
 
 def finish():
