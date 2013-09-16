@@ -1,25 +1,23 @@
 """
 Auxiliary Routines for the micro compiler.
 """
+import sys
 
 # Globals
 max_temp = 0
-output_file = "output/op_code"
 
-def generate(s1, s2=None, s3=None, s4=None, output_file=output_file):
-    with open(output_file, 'a') as f:
-        if s4:
-            f.write("%s %s, %s, %s\n" % (s1, s2, s3, s4))
-        elif s3:
-            f.write("%s %s, %s\n" % (s1, s2, s3))
-        else:
-            f.write("%s" % s1)
-
+def generate(s1, s2=None, s3=None, s4=None):
+    if s4:
+        sys.stdout.write("%s %s, %s, %s\n" % (s1, s2, s3, s4))
+    elif s3:
+        sys.stdout.write("%s %s, %s\n" % (s1, s2, s3))
+    else:
+        sys.stdout.write("%s" % s1)
 
 def extract(e):
-    try:
+    if e.name:
         return str(e.name)
-    except AttributeError:
+    else:
         return int(e.val)
 
 def extract_op(o):
