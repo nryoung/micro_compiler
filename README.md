@@ -1,13 +1,13 @@
-Name: Nicholas Young  
-Course: CSCI 4640
+micro_compiler
+==============
 
 Requirements
-============
-- Python version 2.7.3+
+------------
+- Python version 2.7+
 
 
 Test Compile:
-=============
+-------------
 
 `$ python test_compiler.py compile --in_file=<file with micro_lang> --out_file=<output file>`
 
@@ -23,7 +23,7 @@ Example test Compile command:
 
 
 Test Parser:
-============
+------------
 
 `$ python test_compiler.py parser --in_file=<file with micro_lang>`
 
@@ -38,7 +38,7 @@ Example test Parser command:
 
 
 Test Scanner:
-=============
+-------------
 
 `$ python test_compiler.py scanner --in_file=<file with micro_lang>`
 
@@ -53,7 +53,7 @@ Example test Scanner command:
 
 
 Unit Tests:
-===========
+-----------
 
 `python test_compiler.py unit`
 

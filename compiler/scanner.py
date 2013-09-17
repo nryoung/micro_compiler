@@ -1,7 +1,5 @@
 """
-Scanner implementation
-Name: Nicholas Young
-Course: CSCI 4640
+Scanner implementation for micro compiler.
 """
 from .compiler_errors import LexicalError
 

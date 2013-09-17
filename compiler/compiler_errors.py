@@ -1,7 +1,5 @@
 """
 Errors for the compiler
-Name: Nicholas Young
-Course: CSCI 4640
 """
 
 class CompilerError(Exception):

@@ -1,7 +1,5 @@
 """
 Parser implementation
-Name: Nicholas Young
-Course: CSCI 4640
 """
 from .compiler_errors import SyntaxError
 from .scanner import Scanner

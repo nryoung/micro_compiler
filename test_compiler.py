@@ -1,8 +1,6 @@
 """
-Test runner for Compiler implementation.
+Test runner for micro compiler implementation.
 Depending on cmd line arguments it will run specific tests.
-Name: Nicholas Young
-Course: CSCI 4640
 """
 import argparse
 import tests
