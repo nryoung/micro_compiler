@@ -29,12 +29,16 @@ class Parser(object):
         return next_token
 
     def match(self, legal_token):
-        current_token = self.scanner.scan()
-
-        if current_token != legal_token:
-            raise SyntaxError(current_token)
+        if self.next_token() == legal_token:
+            current_token = self.scanner.scan()
         else:
-            self.terminals.append(current_token)
+            current_token = legal_token
+            # handle SyntaxError here somehow
+            if legal_token == 'EofSym' or  if legal_token == 'SemiColon':
+                current_token = self.scanner.scan()
+                while current_token != legal_token:
+                    current_token = self.scanner.scan()
+
 
     def system_goal(self):
         self.build_output('<system goal>')
