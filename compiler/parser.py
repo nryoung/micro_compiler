@@ -186,3 +186,16 @@ class Parser(object):
 
         else:
             raise SyntaxError(next_token)
+
+    def check_input(self, valid_set, follow_set, header_set):
+        next_token = self.next_token()
+
+        if next_token in valid_set:
+            return
+        else:
+            illegal_token = next_token
+
+            while next_token not in valid_set and next_token not in follow_set and next_token not in header_set:
+                next_token = self.next_token()
+
+            raise SyntaxError(illegal_token)
