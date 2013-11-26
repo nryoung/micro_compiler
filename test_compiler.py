@@ -31,6 +31,11 @@ def test_compile(in_file, out_file):
         out_file.write(output.content)
         print "Compiled to location: %s" % out_file.name
 
+    if p.errors:
+        print "The following errors where detected and recovery was attempted"
+        for err in p.errors:
+            print err
+
 def test_parser(program):
     from compiler.parser import Parser
 

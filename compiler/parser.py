@@ -13,6 +13,7 @@ class Parser(object):
         self.terminals = []
         self.output = []
         self.symbol_table = []
+        self.errors = []
 
     def build_output(self, s):
         if self.terminals:
@@ -33,8 +34,8 @@ class Parser(object):
             current_token = self.scanner.scan()
         else:
             current_token = legal_token
-            # handle SyntaxError here somehow
-            if legal_token == 'EofSym' or  if legal_token == 'SemiColon':
+            self.errors.append({'SyntaxError': self.next_token()})
+            if legal_token == 'EofSym' or legal_token == 'SemiColon':
                 current_token = self.scanner.scan()
                 while current_token != legal_token:
                     current_token = self.scanner.scan()
@@ -51,6 +52,7 @@ class Parser(object):
     def program(self):
         self.build_output('<program>')
         sem_routines.start(self.symbol_table)
+        self.check_input(('BeginSym',), ('EofSym',), ('EofSym',))
         self.match('BeginSym')
         self.statement_list()
         self.match('EndSym')
@@ -58,6 +60,7 @@ class Parser(object):
 
     def statement_list(self):
         self.build_output('<statement list>')
+        self.check_input(('Id', 'ReadSym', 'WriteSym'), ('EndSym',), ('EofSym',))
         self.statement()
         next_token = self.next_token()
         if next_token == 'Id':
@@ -74,6 +77,7 @@ class Parser(object):
         expr = ExprRec()
         self.build_output('<statement>')
         next_token = self.next_token()
+        self.check_input(('Id', 'ReadSym', 'WriteSym'), ('EndSym',), ('EofSym',))
         if next_token == 'Id':
             self.ident(identifier)
             self.match('AssignOp')
@@ -129,6 +133,9 @@ class Parser(object):
         right_oper = ExprRec()
         op = OpRec()
         self.build_output('<expression>')
+        self.check_input(('Id', 'IntLiteral', 'LParen'),
+                         ('Comma', 'SemiColon', 'RParen'),
+                         ('EndSym'))
         self.primary(left_oper)
         next_token = self.next_token()
 
